@@ -1,2 +1,5 @@
 [ui]
 https://ui.shadcn.com
+
+[database]
+https://planetscale.com
