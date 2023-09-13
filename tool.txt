@@ -3,3 +3,6 @@ https://ui.shadcn.com
 
 [database]
 https://planetscale.com
+
+[icon]
+https://lucide.dev
