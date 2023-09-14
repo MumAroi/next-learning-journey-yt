@@ -15,3 +15,6 @@ https://react-hook-form.com
 
 [style-animation]
 https://www.framer.com/motion
+
+[HTTP client]
+https://axios-http.com

@@ -2,9 +2,9 @@
 import withAuth from "next-auth/middleware";
 
 export default withAuth({
-	pages: { signIn: "/" },
+	// pages: { signIn: "/" },
 });
 
 export const config = {
-	matcher: [],
+	matcher: ["/create"],
 };
