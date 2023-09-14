@@ -6,3 +6,12 @@ https://planetscale.com
 
 [icon]
 https://lucide.dev
+
+[validator]
+https://zod.dev
+
+[form-management]
+https://react-hook-form.com
+
+[style-animation]
+https://www.framer.com/motion
