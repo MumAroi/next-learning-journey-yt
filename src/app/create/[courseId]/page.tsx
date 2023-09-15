@@ -2,6 +2,7 @@ import { prisma } from '@/lib/db';
 import React from 'react'
 import { redirect } from "next/navigation";
 import { Info } from 'lucide-react';
+import ConfirmChapters from '@/components/ConfirmChapters';
 
 // clmk08pg200017pbwqjy26ci1
 
@@ -41,6 +42,7 @@ const CreateChapters = async ({ params: { courseId } }: Props) => {
           click the Button to confirm and continue
         </div>
       </div>
+      <ConfirmChapters course={course}/>
     </div>
   )
 }
