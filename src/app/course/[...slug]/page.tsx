@@ -1,4 +1,5 @@
 import CourseSideBar from '@/components/CourseSideBar';
+import MainVideoSummary from '@/components/MainVideoSummary';
 import { prisma } from '@/lib/db';
 import { redirect } from 'next/navigation';
 import React from 'react'
@@ -44,7 +45,21 @@ const page = async ({ params: { slug } }: Props) => {
   const prevChapter = unit.chapters[chapterIndex - 1];
 
   return (
-    <CourseSideBar course={course} currentChapterId={chapter.id} />
+    <div>
+      <CourseSideBar course={course} currentChapterId={chapter.id} />
+      <div>
+        <div className="ml-[400px] px-8">
+          <div className="flex">
+            <MainVideoSummary
+              chapter={chapter}
+              chapterIndex={chapterIndex}
+              unit={unit}
+              unitIndex={unitIndex}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 
