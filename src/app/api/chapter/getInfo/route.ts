@@ -17,7 +17,7 @@ export async function POST(req: Request, res: Response) {
         id: chapterId,
       },
     });
-    
+
     if (!chapter) {
       return NextResponse.json(
         {
