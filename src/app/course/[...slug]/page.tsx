@@ -59,6 +59,7 @@ const CoursePage = async ({ params: { slug } }: Props) => {
           </div>
 
           <div className="flex-[1] h-[1px] mt-4 text-gray-500 bg-gray-500" />
+          
           <div className="flex pb-8">
             {prevChapter && (
               <Link

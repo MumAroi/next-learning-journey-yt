@@ -1,3 +1,4 @@
+import { getAuthSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { strict_output } from "@/lib/gpt";
 import { getQuestionsFromTranscript, getTranscript, searchYoutube } from "@/lib/youtube";
@@ -10,6 +11,12 @@ const bodyParser = z.object({
 
 export async function POST(req: Request, res: Response) {
   try {
+    
+    const session = await getAuthSession();
+    if (!session?.user) {
+      return new NextResponse("unauthorized", { status: 401 });
+    }
+
     const body = await req.json();
     const { chapterId } = bodyParser.parse(body);
     const chapter = await prisma.chapter.findUnique({
@@ -35,7 +42,7 @@ export async function POST(req: Request, res: Response) {
 
     const { summary }: { summary: string } = await strict_output(
       "You are an AI capable of summarising a youtube transcript",
-      "summarise in 250 words or less and do not talk of the sponsors or anything unrelated to the main topic, also do not introduce what the summary is about.\n" +
+      "summarise in 250 words or less and do not talk of the sponsors or anything unrelated to the main topic and remove quotation marks or escape character, also do not introduce what the summary is about.\n" +
         transcript,
       { summary: "summary of the transcript" }
     );
