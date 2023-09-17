@@ -1,8 +1,8 @@
-import { Chapter, Course, Unit } from '@prisma/client';
-import Link from 'next/link';
-import React from 'react'
-import { Separator } from './ui/separator';
-import { cn } from '@/lib/utils';
+import { Chapter, Course, Unit } from "@prisma/client";
+import Link from "next/link";
+import React from "react";
+import { Separator } from "./ui/separator";
+import { cn } from "@/lib/utils";
 
 type Props = {
   course: Course & {
@@ -44,7 +44,7 @@ const CourseSideBar = async ({ course, currentChapterId }: Props) => {
         );
       })}
     </div>
-  )
-}
+  );
+};
 
-export default CourseSideBar
+export default CourseSideBar;

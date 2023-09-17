@@ -8,6 +8,7 @@ type Props = {
 };
 
 const UserAvatar = ({ user }: Props) => {
+  
   return (
     <Avatar>
       {user.image ? (

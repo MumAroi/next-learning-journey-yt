@@ -12,6 +12,7 @@ type Props = {
 };
 
 const GalleryCourseCard = async ({ course }: Props) => {
+  
   return (
     <>
       <div className="border rounded-lg border-secondary">
@@ -22,7 +23,7 @@ const GalleryCourseCard = async ({ course }: Props) => {
           >
             <Image
               src={course.image || ""}
-              className="object-cover w-full max-h-[300px] rounded-t-lg" 
+              className="object-cover w-full max-h-[300px] rounded-t-lg"
               width={300}
               height={300}
               alt="picture of the course"
