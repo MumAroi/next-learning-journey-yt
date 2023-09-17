@@ -6,5 +6,5 @@ export default withAuth({
 });
 
 export const config = {
-	matcher: ["/create/:path*"],
+	matcher: ["/create/:path*", "/gallery", "/course"],
 };

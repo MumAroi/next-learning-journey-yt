@@ -1,29 +1,28 @@
-"use client"
-import React from 'react'
-import { Form, FormControl, FormField, FormItem, FormLabel } from './ui/form'
-import { createChaptersSchema } from '@/validators/course';
-import { z } from 'zod';
-import { useForm } from 'react-hook-form';
+"use client";
+import React from "react";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
+import { z } from "zod";
+import { createChaptersSchema } from "@/validators/course";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from './ui/input';
-import { Separator } from './ui/separator';
-import { Button } from './ui/button';
-import { Plus, Trash } from 'lucide-react';
-import { motion, AnimatePresence } from "framer-motion"
-import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
-import { useRouter } from 'next/navigation';
-import { useToast } from './ui/use-toast';
+import { Input } from "./ui/input";
+import { Separator } from "./ui/separator";
+import { Button } from "./ui/button";
+import { Plus, Trash } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { useToast } from "./ui/use-toast";
+import { useRouter } from "next/navigation";
+import SubscriptionAction from "./SubscriptionAction";
 
-type Props = {}
+type Props = { isPro: boolean };
 
 type Input = z.infer<typeof createChaptersSchema>;
 
-const CreateCourseForm = (props: Props) => {
-  
-  const { toast } = useToast();
+const CreateCourseForm = ({ isPro }: Props) => {
   const router = useRouter();
-
+  const { toast } = useToast();
   const { mutate: createChapters, isLoading } = useMutation({
     mutationFn: async ({ title, units }: Input) => {
       const response = await axios.post("/api/course/createChapters", {
@@ -33,7 +32,6 @@ const CreateCourseForm = (props: Props) => {
       return response.data;
     },
   });
-
   const form = useForm<Input>({
     resolver: zodResolver(createChaptersSchema),
     defaultValues: {
@@ -75,8 +73,8 @@ const CreateCourseForm = (props: Props) => {
   return (
     <div className="w-full">
       <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full mt-4">
-        <FormField
+        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full mt-4">
+          <FormField
             control={form.control}
             name="title"
             render={({ field }) => {
@@ -93,6 +91,7 @@ const CreateCourseForm = (props: Props) => {
               );
             }}
           />
+
           <AnimatePresence>
             {form.watch("units").map((_, index) => {
               return (
@@ -127,9 +126,10 @@ const CreateCourseForm = (props: Props) => {
                     }}
                   />
                 </motion.div>
-              )
+              );
             })}
           </AnimatePresence>
+
           <div className="flex items-center justify-center mt-4">
             <Separator className="flex-[1]" />
             <div className="mx-4">
@@ -157,6 +157,7 @@ const CreateCourseForm = (props: Props) => {
                 <Trash className="w-4 h-4 ml-2 text-red-500" />
               </Button>
             </div>
+            <Separator className="flex-[1]" />
           </div>
           <Button
             disabled={isLoading}
@@ -168,8 +169,9 @@ const CreateCourseForm = (props: Props) => {
           </Button>
         </form>
       </Form>
+      {!isPro && <SubscriptionAction />}
     </div>
-  )
-}
+  );
+};
 
-export default CreateCourseForm
+export default CreateCourseForm;

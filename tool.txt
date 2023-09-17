@@ -21,3 +21,6 @@ https://axios-http.com
 
 [asynchronous state management]
 https://tanstack.com/query
+
+[payment]
+https://stripe.com
