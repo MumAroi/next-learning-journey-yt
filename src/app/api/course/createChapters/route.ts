@@ -1,13 +1,13 @@
-import { getAuthSession } from '@/lib/auth';
-import { createChaptersSchema } from '@/validators/course';
-import { NextResponse } from 'next/server'
-import { ZodError } from 'zod';
+import { getAuthSession } from "@/lib/auth";
+import { createChaptersSchema } from "@/validators/course";
+import { NextResponse } from "next/server";
+import { ZodError } from "zod";
 import { strict_output } from "@/lib/gpt";
-import { getUnsplashImage } from '@/lib/unsplash';
-import { prisma } from '@/lib/db';
-import { checkSubscription } from '@/lib/subscription';
+import { getUnsplashImage } from "@/lib/unsplash";
+import { prisma } from "@/lib/db";
+import { checkSubscription } from "@/lib/subscription";
 
-export async function POST(req: Request, res: Response){
+export async function POST(req: Request, res: Response) {
   try {
     const session = await getAuthSession();
     if (!session?.user) {
@@ -18,7 +18,7 @@ export async function POST(req: Request, res: Response){
     if (session.user.credits <= 0 && !isPro) {
       return new NextResponse("no credits", { status: 402 });
     }
-    
+
     const body = await req.json();
     const { title, units } = createChaptersSchema.parse(body);
 
@@ -52,7 +52,7 @@ export async function POST(req: Request, res: Response){
     const course_image = await getUnsplashImage(
       imageSearchTerm.image_search_term
     );
-
+    
     const course = await prisma.$transaction(async (tx) => {
       // Code running in a transaction...
       const course = await tx.course.create({
@@ -103,5 +103,4 @@ export async function POST(req: Request, res: Response){
     }
     console.error(error);
   }
-  return NextResponse.json({hello:"world"})
 }

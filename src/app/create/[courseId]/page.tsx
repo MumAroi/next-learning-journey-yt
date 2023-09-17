@@ -1,10 +1,9 @@
-import { prisma } from '@/lib/db';
-import React from 'react'
+import { prisma } from "@/lib/db";
+import React from "react";
 import { redirect } from "next/navigation";
-import { Info } from 'lucide-react';
-import ConfirmChapters from '@/components/ConfirmChapters';
-
-// clmk08pg200017pbwqjy26ci1
+import { Info } from "lucide-react";
+import ConfirmChapters from "@/components/ConfirmChapters";
+import { getAuthSession } from "@/lib/auth";
 
 type Props = {
   params: {
@@ -13,6 +12,11 @@ type Props = {
 };
 
 const CreateChapters = async ({ params: { courseId } }: Props) => {
+  const session = await getAuthSession();
+  if (!session?.user) {
+    return redirect("/gallery");
+  }
+
   const course = await prisma.course.findUnique({
     where: {
       id: courseId,
@@ -25,9 +29,11 @@ const CreateChapters = async ({ params: { courseId } }: Props) => {
       },
     },
   });
+  
   if (!course) {
     return redirect("/create");
   }
+
   return (
     <div className="flex flex-col items-start max-w-xl mx-auto my-16">
       <h5 className="text-sm uppercase text-seconday-foreground/60">
@@ -42,9 +48,9 @@ const CreateChapters = async ({ params: { courseId } }: Props) => {
           click the Button to confirm and continue
         </div>
       </div>
-      <ConfirmChapters course={course}/>
+      <ConfirmChapters course={course} />
     </div>
-  )
-}
+  );
+};
 
-export default CreateChapters
+export default CreateChapters;
