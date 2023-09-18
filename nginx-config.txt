@@ -1,0 +1,23 @@
+// with out load balancing
+
+server {
+	server_name  refill.monster;
+	location / {
+		proxy_pass http://localhost:3000;
+	}
+}
+
+// with load balancing
+http {
+  upstream app {
+    server localhost:3000;
+    server localhost:3001;
+  }
+    
+  server {
+    server_name  refill.monster;
+    location / {
+      proxy_pass http://app;
+    }
+  }
+}
